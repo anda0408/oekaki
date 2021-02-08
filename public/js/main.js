@@ -24,26 +24,31 @@ penButton.addEventListener('click', () => {
 const redButton = document.querySelector('#red-button');
 redButton.addEventListener('click', () => {
   currentColor = '#FF0000';
+  eraser = false;
 });
 
 const orangeButton = document.querySelector('#orange-button');
 orangeButton.addEventListener('click', () => {
   currentColor = '#FF9900';
+  eraser = false;
 });
 
 const yellowButton = document.querySelector('#yellow-button');
 yellowButton.addEventListener('click', () => {
   currentColor = '#FFFF00';
+  eraser = false;
 });
 
 const greenButton = document.querySelector('#green-button');
 greenButton.addEventListener('click', () => {
   currentColor = '#33FF00';
+  eraser = false;
 });
 
 const blueButton = document.querySelector('#blue-button');
 blueButton.addEventListener('click', () => {
   currentColor = '#33CCFF';
+  eraser = false;
 });
 
 var elem = document.getElementById('range');
