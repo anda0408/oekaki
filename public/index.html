@@ -9,6 +9,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="http://bebraw.github.io/colorjoe/css/colorjoe.css">
+  <script type="text/javascript">
+    window.onload = function () {
+      // 入力ダイアログを表示 ＋ 入力内容を user に代入
+      user = window.prompt("ユーザー名を入力してください", "");
+      document.getElementById("username").innerHTML = user;
+      document.getElementById("username").value = user;
+    }
+
+  </script>
 </head>
 
 <body>
@@ -61,6 +70,7 @@
       </font>
     </div>
   </div>
+  <label for="username">username:<p id="username" style="display:inline;"></p></label>
   <form id="message_form" action="#">
     <input id="input_msg" autocomplete="off" /><button>Send</button>
   </form>
@@ -70,7 +80,7 @@
       var socketio = io();
       $(function () {
         $('#message_form').submit(function () {
-          socketio.emit('message', $('#input_msg').val()); //構造化して拡張
+          socketio.emit('message', $('#username').val() + ":" + $('#input_msg').val()); //構造化して拡張
           $('#input_msg').val('');
           return false;
         });
@@ -97,7 +107,7 @@
     overflow-y: scroll;
     border: solid 1px black;
   }
-
+ 
   ul {
     transform: rotate(180deg);
   }
@@ -108,4 +118,5 @@
 </style>
 <script src="/socket.io/socket.io.js"></script>
 <script src="js/main.js"></script>
+
 </html>
