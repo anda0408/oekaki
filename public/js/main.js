@@ -90,7 +90,9 @@ window.addEventListener('mouseup', e => {
 function drawLine(context, x1, y1, x2, y2) {
   context.beginPath();
   if (eraser == true) {
-    socket.emit('send-eraser', { x1, y1, x2, y2, width });
+    socket.emit('send-stroke', { x1, y1, x2, y2,});
+    socket.emit('send-width', width)
+    socket.emit('send-color', '#FFFFFF')
   }
   else {
     socket.emit('send-stroke', { x1, y1, x2, y2 })
