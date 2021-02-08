@@ -128,10 +128,15 @@ socket.on('clear-pls', (data) => {
 //download
 document.getElementById("download").onclick = (event) => {
   var name = document.getElementById("file_name").value;
+  var extension = document.getElementById("file_extension").value;
   let canvas = document.getElementById("draw-area");
   let link = document.createElement("a");
   link.href = canvas.toDataURL("image/" + extension);
-  link.download = name + "." + extension;
+  if (name == ""){
+    link.download = "無題." + extension;
+  } else {
+    link.download = name + "." + extension;
+  }
   link.click();
   document.getElementById("file_name").value = "";
   //let clear = document.getElementById("clear-button");
