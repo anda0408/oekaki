@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>お絵かきアプリ</title>
+  <script src="https://irfansimpleoekaki.herokuapp.com/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="http://bebraw.github.io/colorjoe/css/colorjoe.css">
+</head>
+
+<body>
+  <h1>
+    <font size="6" face="HGP行書体" color="#123456">お絵かきアプリ</font>
+  </h1>
+  <div class="oekaki">
+    <canvas id="draw-area" width="400px" height="400px" style="border: 1px solid #000000;">
+    </canvas>
+    <span id="color-palette">
+    </span>
+    <form id="download_form" action="#">
+      <input id="file_name" autocomplete="off" />.jpg <button id="download">download</button>
+    </form>
+    <button id="pen-button">
+      <font color="#123456">鉛筆</font>
+    </button>
+    <button id="eraser-button">
+      <font color="#123456">消しゴム</font>
+    </button>
+    <button id="clear-button">
+      <font color="#123456">全消し</font>
+    </button>
+    <!--色変更の為のボタン-->
+    <button id="red-button">
+      <font color="red">赤</font>
+    </button>
+    <button id="orange-button">
+      <font color="#FF9900">橙</font>
+    </button>
+    <button id="yellow-button">
+      <font color="#FFD700">黄</font>
+    </button>
+    <button id="green-button">
+      <font color="green">緑</font>
+    </button>
+    <button id="blue-button">
+      <font color="blue">青</font>
+    </button>
+
+    <!--ペンの太さ変更のレンジスライダー-->
+    <div>
+      <font color="#123456">
+        ペンの太さ　1<input type="range" id="range" min="1" max="10" step="1">10
+      </font>
+    </div>
+  </div>
+  <form id="message_form" action="#">
+    <input id="input_msg" autocomplete="off" /><button>Send</button>
+  </form>
+  <div id="chatbox">
+    <ul id="messages"></ul>
+    <script>
+      var socketio = io();
+      $(function () {
+        $('#message_form').submit(function () {
+          socketio.emit('message', $('#input_msg').val()); //構造化して拡張
+          $('#input_msg').val('');
+          return false;
+        });
+        socketio.on('message', function (msg) {
+          $('#messages').append($('<li>').text(msg));
+
+        });
+      });
+
+    </script>
+  </div>
+</body>
+<style type="text/css">
+  div.oekaki {
+    float: left;
+    width: 500px;
+    height: 2000px;
+  }
+</style>
+<style>
+  #chatbox {
+    height: 400px;
+    width: 300px;
+    overflow-y: scroll;
+    border: solid 1px black;
+  }
+
+  ul {
+    transform: rotate(180deg);
+  }
+
+  ul>li {
+    transform: rotate(-180deg);
+  }
+</style>
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/main.js"></script>
+</html>
