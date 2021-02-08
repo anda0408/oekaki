@@ -26,9 +26,6 @@ io.on('connection', socket => {
    socket.on('send-color',col=>{
       color=col;
    })
-   socket.on('send-eraser',({x1,y1,x2,y2,num})=>{
-      socket.broadcast.emit('eraser',{x1,y1,x2,y2,num});
-     })
    socket.on('clear-click',(data)=>{
       socket.broadcast.emit('clear-pls',data);
    })

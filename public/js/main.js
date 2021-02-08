@@ -4,8 +4,8 @@ let row = 0;
 let isDrawing = false;
 let x = 0;
 let y = 0;
-let eraser = false;
-let width = 1;
+let width = 5;
+
 const myPics = document.querySelector('#draw-area');
 const context = myPics.getContext('2d');
 context.fillStyle = "#fff";
@@ -14,41 +14,34 @@ context.fillRect(0, 0, myPics.clientWidth, myPics.clientHeight);
 const eraserButton = document.querySelector('#eraser-button');
 eraserButton.addEventListener('click', () => {
   currentColor = '#FFFFFF';
-  eraser = true;
 });
 const penButton = document.querySelector('#pen-button');
 penButton.addEventListener('click', () => {
   currentColor = '#000000';
-  eraser = false;
 })
 const redButton = document.querySelector('#red-button');
 redButton.addEventListener('click', () => {
   currentColor = '#FF0000';
-  eraser = false;
 });
 
 const orangeButton = document.querySelector('#orange-button');
 orangeButton.addEventListener('click', () => {
   currentColor = '#FF9900';
-  eraser = false;
 });
 
 const yellowButton = document.querySelector('#yellow-button');
 yellowButton.addEventListener('click', () => {
   currentColor = '#FFFF00';
-  eraser = false;
 });
 
 const greenButton = document.querySelector('#green-button');
 greenButton.addEventListener('click', () => {
   currentColor = '#33FF00';
-  eraser = false;
 });
 
 const blueButton = document.querySelector('#blue-button');
 blueButton.addEventListener('click', () => {
   currentColor = '#33CCFF';
-  eraser = false;
 });
 
 var elem = document.getElementById('range');
@@ -89,16 +82,9 @@ window.addEventListener('mouseup', e => {
 });
 function drawLine(context, x1, y1, x2, y2) {
   context.beginPath();
-  if (eraser == true) {
-    socket.emit('send-stroke', { x1, y1, x2, y2,});
-    socket.emit('send-width', width)
-    socket.emit('send-color', '#FFFFFF')
-  }
-  else {
-    socket.emit('send-stroke', { x1, y1, x2, y2 })
-    socket.emit('send-width', width)
-    socket.emit('send-color', currentColor)
-  }
+  socket.emit('send-stroke', { x1, y1, x2, y2 })
+  socket.emit('send-width', width)
+  socket.emit('send-color', currentColor)
   context.lineWidth = width;
   context.strokeStyle = currentColor;
   context.moveTo(x1, y1);
@@ -111,16 +97,6 @@ socket.on('stroke', ({ x1, y1, x2, y2, widt, color }) => {
   context.beginPath();
   context.strokeStyle = color;
   context.lineWidth = widt;
-  context.moveTo(x1, y1);
-  context.lineTo(x2, y2);
-  context.stroke();
-  context.closePath();
-})
-//autoErase
-socket.on('eraser', ({ x1, y1, x2, y2, name, num }) => {
-  context.beginPath();
-  context.strokeStyle = '#FFFFFF';
-  context.lineWidth = num;
   context.moveTo(x1, y1);
   context.lineTo(x2, y2);
   context.stroke();
@@ -139,14 +115,11 @@ document.getElementById("download").onclick = (event) => {
   let canvas = document.getElementById("draw-area");
   let link = document.createElement("a");
   link.href = canvas.toDataURL("image/" + extension);
-  if (name == ""){
+  if (name == "") {
     link.download = "無題." + extension;
   } else {
     link.download = name + "." + extension;
   }
   link.click();
   document.getElementById("file_name").value = "";
-  //let clear = document.getElementById("clear-button");
-  //clear.click();
 }
-//message
