@@ -130,8 +130,8 @@ document.getElementById("download").onclick = (event) => {
   var name = document.getElementById("file_name").value;
   let canvas = document.getElementById("draw-area");
   let link = document.createElement("a");
-  link.href = canvas.toDataURL("image/jpg");
-  link.download = name + ".jpg";
+  link.href = canvas.toDataURL("image/" + extension);
+  link.download = name + "." + extension;
   link.click();
   document.getElementById("file_name").value = "";
   //let clear = document.getElementById("clear-button");
